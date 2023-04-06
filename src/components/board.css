@@ -1,9 +1,10 @@
-.board{
+.board {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.status{
+
+.status {
     margin: 1vh;
     font-size: 3vw;
     font-family: 'Courier New', Courier, monospace;
