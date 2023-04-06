@@ -1,10 +1,10 @@
 import React from 'react'
-import './button.css'
+import './square.css'
 
 const Square = ({ value, onSquareClick }) => {
     return (
         <div>
-            <button className='square' onClick={onSquareClick}>{value}</button>
+            <button className='custom-btn btn-10' onClick={onSquareClick}>{value}</button>
         </div>
     )
 }

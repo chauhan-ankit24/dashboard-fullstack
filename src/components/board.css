@@ -3,3 +3,9 @@
     align-items: center;
     justify-content: center;
 }
+.status{
+    margin: 1vh;
+    font-size: 3vw;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 800;
+}

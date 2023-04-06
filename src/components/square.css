@@ -1,0 +1,51 @@
+.custom-btn {
+    width: 10vw;
+    height: 11vh;
+    color: #fff;
+    border-radius: 2vw;
+    padding: 1vw 1vw;
+    margin: 1vw;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    font-size: 2vw;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+  }
+  .btn-10 {
+    background: rgb(142, 140, 194);
+  background: linear-gradient(0deg, rgb(161, 157, 231) 0%, rgb(221, 172, 218) 100%);
+    color: #81159c;
+    border: none;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+  .btn-10:after {
+    position: absolute;
+    content: " ";
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+    -webkit-transform: scale(.1);
+    transform: scale(.1);
+  }
+  .btn-10:hover {
+    color: #8b2dbd;
+    border: none;
+    background: transparent;
+  }
+  .btn-10:hover:after {
+    background: rgb(181, 182, 245);
+  background: linear-gradient(0deg, rgba(2,126,251,1) 0%,  rgb(165, 166, 205)100%);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
