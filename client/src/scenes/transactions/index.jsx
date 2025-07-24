@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { useGetTransactionsQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 import Header from "components/Header";
 import DataGridCustomToolbar from "components/DataGridCustomToolbar";
 
@@ -15,12 +15,10 @@ const Transactions = () => {
   const [search, setSearch] = useState("");
 
   const [searchInput, setSearchInput] = useState("");
-  const { data, isLoading } = useGetTransactionsQuery({
-    page,
-    pageSize,
-    sort: JSON.stringify(sort),
-    search,
-  });
+  const { transactions } = useRealtimeDashboard();
+  const isLoading = !transactions.length;
+  // For demo: ignore pagination/sort/search, just show all live transactions
+  const data = { transactions, total: transactions.length };
 
   const columns = [
     {
@@ -84,24 +82,10 @@ const Transactions = () => {
         }}
       >
         <DataGrid
-          loading={isLoading || !data}
+          loading={isLoading}
           getRowId={(row) => row._id}
-          rows={(data && data.transactions) || []}
+          rows={transactions}
           columns={columns}
-          rowCount={(data && data.total) || 0}
-          rowsPerPageOptions={[20, 50, 100]}
-          pagination
-          page={page}
-          pageSize={pageSize}
-          paginationMode="server"
-          sortingMode="server"
-          onPageChange={(newPage) => setPage(newPage)}
-          onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-          onSortModelChange={(newSortModel) => setSort(...newSortModel)}
-          components={{ Toolbar: DataGridCustomToolbar }}
-          componentsProps={{
-            toolbar: { searchInput, setSearchInput, setSearch },
-          }}
         />
       </Box>
     </Box>

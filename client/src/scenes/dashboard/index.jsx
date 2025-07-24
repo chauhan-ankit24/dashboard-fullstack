@@ -20,11 +20,17 @@ import BreakdownChart from "components/BreakdownChart";
 import OverviewChart from "components/OverviewChart";
 import { useGetDashboardQuery } from "state/api";
 import StatBox from "components/StatBox";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 
 const Dashboard = () => {
   const theme = useTheme();
   const isNonMediumScreens = useMediaQuery("(min-width: 1200px)");
-  const { data, isLoading } = useGetDashboardQuery();
+  const { data: apiData, isLoading } = useGetDashboardQuery();
+  // Use all live data from the realtime hook
+  const { dashboard, products, customers, transactions, users, affiliateStats } = useRealtimeDashboard();
+
+  // Use dashboard from realtime hook if available, else fallback to apiData
+  const data = Object.keys(dashboard).length ? dashboard : apiData;
 
   const columns = [
     {
@@ -101,8 +107,30 @@ const Dashboard = () => {
           }
         />
         <StatBox
+          title="Total Users"
+          value={users.length}
+          increase="+2%"
+          description="Live user count"
+          icon={
+            <PersonAdd
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <StatBox
+          title="Total Affiliates"
+          value={affiliateStats.length}
+          increase="+1%"
+          description="Live affiliate count"
+          icon={
+            <Traffic
+              sx={{ color: theme.palette.secondary[300], fontSize: "26px" }}
+            />
+          }
+        />
+        <StatBox
           title="Sales Today"
-          value={data && data.todayStats.totalSales}
+          value={data && data.todayStats && data.todayStats.totalSales}
           increase="+21%"
           description="Since last month"
           icon={
@@ -174,9 +202,9 @@ const Dashboard = () => {
           }}
         >
           <DataGrid
-            loading={isLoading || !data}
+            loading={!transactions.length}
             getRowId={(row) => row._id}
-            rows={(data && data.transactions) || []}
+            rows={transactions}
             columns={columns}
           />
         </Box>

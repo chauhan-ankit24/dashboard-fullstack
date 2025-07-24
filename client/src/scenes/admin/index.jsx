@@ -1,13 +1,15 @@
 import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { useGetAdminsQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "components/Header";
 import CustomColumnMenu from "components/DataGridCustomColumnMenu";
 
 const Admin = () => {
   const theme = useTheme();
-  const { data, isLoading } = useGetAdminsQuery();
+  const { users } = useRealtimeDashboard();
+  const data = users.filter(u => u.role === 'admin');
+  const isLoading = !users.length;
 
   const columns = [
     {

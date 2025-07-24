@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { useGetUserPerformanceQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 import { useSelector } from "react-redux";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "components/Header";
@@ -8,8 +8,10 @@ import CustomColumnMenu from "components/DataGridCustomColumnMenu";
 
 const Performance = () => {
   const theme = useTheme();
-  const userId = useSelector((state) => state.global.userId);
-  const { data, isLoading } = useGetUserPerformanceQuery(userId);
+  // For demo: show all affiliateStats as performance
+  const { affiliateStats } = useRealtimeDashboard();
+  const isLoading = !affiliateStats.length;
+  const data = { sales: affiliateStats };
 
   const columns = [
     {
@@ -77,9 +79,9 @@ const Performance = () => {
         }}
       >
         <DataGrid
-          loading={isLoading || !data}
+          loading={isLoading}
           getRowId={(row) => row._id}
-          rows={(data && data.sales) || []}
+          rows={affiliateStats}
           columns={columns}
           components={{
             ColumnMenu: CustomColumnMenu,

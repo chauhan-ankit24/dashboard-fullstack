@@ -4,13 +4,14 @@ import { Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Navbar from "components/Navbar";
 import Sidebar from "components/Sidebar";
-import { useGetUserQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 
 const Layout = () => {
   const isNonMobile = useMediaQuery("(min-width: 600px)");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const { users } = useRealtimeDashboard();
   const userId = useSelector((state) => state.global.userId);
-  const { data } = useGetUserQuery(userId);
+  const data = users.find(u => u._id === userId) || {};
 
   return (
     <Box display={isNonMobile ? "flex" : "block"} width="100%" height="100%">

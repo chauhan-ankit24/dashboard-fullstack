@@ -2,10 +2,11 @@ import React, { useMemo } from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "components/Header";
 import { ResponsiveLine } from "@nivo/line";
-import { useGetSalesQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 
 const Monthly = () => {
-  const { data } = useGetSalesQuery();
+  const { dashboard } = useRealtimeDashboard();
+  const data = dashboard;
   const theme = useTheme();
 
   const [formattedData] = useMemo(() => {

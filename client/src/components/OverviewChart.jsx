@@ -1,14 +1,16 @@
 import React, { useMemo } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
-import { useGetSalesQuery } from "state/api";
+import { useRealtimeDashboard } from "../hooks/useRealtimeDashboard";
 
 const OverviewChart = ({ isDashboard = false, view }) => {
   const theme = useTheme();
-  const { data, isLoading } = useGetSalesQuery();
+  const { dashboard } = useRealtimeDashboard();
+  const data = dashboard && dashboard.monthlyData ? dashboard : null;
+  const isLoading = !data;
 
   const [totalSalesLine, totalUnitsLine] = useMemo(() => {
-    if (!data) return [];
+    if (!data || !data.monthlyData) return [[], []];
 
     const { monthlyData } = data;
     const totalSalesLine = {

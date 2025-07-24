@@ -2,14 +2,15 @@ import React, { useMemo, useState } from "react";
 import { Box, useTheme } from "@mui/material";
 import Header from "components/Header";
 import { ResponsiveLine } from "@nivo/line";
-import { useGetSalesQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Daily = () => {
   const [startDate, setStartDate] = useState(new Date("2021-02-01"));
   const [endDate, setEndDate] = useState(new Date("2021-03-01"));
-  const { data } = useGetSalesQuery();
+  const { dashboard } = useRealtimeDashboard();
+  const data = dashboard;
   const theme = useTheme();
 
   const [formattedData] = useMemo(() => {

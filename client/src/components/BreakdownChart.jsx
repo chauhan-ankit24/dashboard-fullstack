@@ -1,10 +1,12 @@
 import React from "react";
 import { ResponsivePie } from "@nivo/pie";
 import { Box, Typography, useTheme } from "@mui/material";
-import { useGetSalesQuery } from "state/api";
+import { useRealtimeDashboard } from "../hooks/useRealtimeDashboard";
 
 const BreakdownChart = ({ isDashboard = false }) => {
-  const { data, isLoading } = useGetSalesQuery();
+  const { dashboard } = useRealtimeDashboard();
+  const data = dashboard;
+  const isLoading = !dashboard || !dashboard.salesByCategory;
   const theme = useTheme();
 
   if (!data || isLoading) return "Loading...";

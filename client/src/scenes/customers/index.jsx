@@ -1,13 +1,14 @@
 import React from "react";
 import { Box, useTheme } from "@mui/material";
-import { useGetCustomersQuery } from "state/api";
+import { useRealtimeDashboard } from "../../hooks/useRealtimeDashboard";
 import Header from "components/Header";
 import { DataGrid } from "@mui/x-data-grid";
 
 const Customers = () => {
   const theme = useTheme();
-  const { data, isLoading } = useGetCustomersQuery();
-  console.log("data", data);
+  const { customers } = useRealtimeDashboard();
+  const isLoading = !customers.length;
+  const data = customers;
 
   const columns = [
     {
@@ -82,9 +83,9 @@ const Customers = () => {
         }}
       >
         <DataGrid
-          loading={isLoading || !data}
+          loading={isLoading}
           getRowId={(row) => row._id}
-          rows={data || []}
+          rows={customers}
           columns={columns}
         />
       </Box>
