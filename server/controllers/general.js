@@ -27,6 +27,10 @@ export const getDashboardStats = async (req, res) => {
     /* Overall Stats */
     const overallStat = await OverallStat.find({ year: currentYear });
 
+    if (!overallStat || overallStat.length === 0) {
+      return res.status(404).json({ message: "No stats found for the requested year." });
+    }
+
     const {
       totalCustomers,
       yearlyTotalSoldUnits,
@@ -54,6 +58,6 @@ export const getDashboardStats = async (req, res) => {
       transactions,
     });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
